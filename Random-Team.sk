@@ -1,0 +1,35 @@
+# Minecraft-Skript-Random Team
+# Version 1.0
+
+command //team:
+	trigger:
+		set {_count} to 0
+		set {_Team1} to 0
+		set {_Team2} to 0
+		delete {Player::*}
+		loop all players:
+			add loop-player to {player::*}
+			add 1 to {_count}
+		set {count.Team1} to ceil({_count}/2)
+		set {count.Team2} to {_count}-{count.Team1}
+		loop {_count} times:
+			set {_Team} to random integer between 1 and {_count}/{count.Team1}
+			if {_Team} is 1:
+				if {count.Team1} > {_Team1}:
+					set {PlayerData.%{player::%loop-number%}%.Team} to "Team1"
+					add 1 to {_Team1}
+				else:
+					set {PlayerData.%{player::%loop-number%}%.Team} to "Team2"
+					add 1 to {_Team2}
+			else:
+				if {count.Team2} > {_Team2}:
+					set {PlayerData.%{player::%loop-number%}%.Team} to "Team2"
+					add 1 to {_Team2}
+				else:
+					set {PlayerData.%{player::%loop-number%}%.Team} to "Team1"
+					add 1 to {_Team1}
+		loop all players:
+			if {PlayerData.%loop-player%.Team} is "Team1":
+                #
+			if {PlayerData.%loop-player%.Team} is "Team2":
+                #
